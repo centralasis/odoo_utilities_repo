@@ -44,6 +44,8 @@ sudo reboot
 
 # Last Script to run
 sudo -u cashier DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$(id -u cashier)/bus" gsettings set org.gnome.desktop.notifications show-banners false
+sudo -u cashier DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$(id -u cashier)/bus" gsettings set org.gnome.desktop.session idle-delay 0
+sudo -u cashier DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$(id -u cashier)/bus" gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-type 'nothing'
 sudo certutil -d sql:/home/admin/.local/share/pki/nssdb -A -t "C,," -n "mkcert" -i "$(mkcert -CAROOT)/rootCA.pem"
 sudo certutil -d sql:/home/cashier/.local/share/pki/nssdb -A -t "C,," -n "mkcert" -i "$(mkcert -CAROOT)/rootCA.pem"
 sudo cp custom.conf /etc/gdm3/.
