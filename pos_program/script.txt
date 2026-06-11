@@ -19,7 +19,7 @@ cd odoo_pos
 git clone https://github.com/centralasis/odoo_utilities_repo.git
 cp -r odoo_utilities_repo/odoo19 .
 cp  odoo_utilities_repo/pos_program/escpos_driver.py .
-cp  odoo_utilities_repo/config.ini .
+cp  odoo_utilities_repo/pos_program/config.ini .
 cp  odoo_utilities_repo/pos_program/custom.conf .
 cp  odoo_utilities_repo/pos_program/chrome-kiosk.desktop .
 
