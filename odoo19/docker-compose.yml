@@ -11,10 +11,7 @@ services:
 
   web_19:
     image: odoo:19.0
-    build:
-      args:
-        ODOO_RELEASE: "20260324"
-        ODOO_SHA: "2d822b95d55931787cbaf2bd09f4f2d54b276b3d"
+    build: .
     restart: unless-stopped
     networks:
       - tunnel_net
