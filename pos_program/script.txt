@@ -23,6 +23,18 @@ cp  odoo_utilities_repo/pos_program/config.ini .
 cp  odoo_utilities_repo/pos_program/custom.conf .
 cp  odoo_utilities_repo/pos_program/chrome-kiosk.desktop .
 
+#disable system print escpos_driver
+sudo systemctl stop cups cups-browsed cups.socket cups.path
+sudo systemctl disable cups cups-browsed cups.socket cups.path
+echo -e "blacklist lp\nblacklist usblp" | sudo tee /etc/modprobe.d/blacklist-printing.conf
+sudo modprobe -r lp usblp
+sudo update-initramfs -u
+
+
+
+
+
+
 
 wget https://raw.githubusercontent.com/pywebdriver/pywebdriver/master/debian/install.sh
 sudo chmod +x install.sh
