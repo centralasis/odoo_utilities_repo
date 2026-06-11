@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Chrome Kiosk Mode
+Exec=/usr/bin/google-chrome --kiosk http://localhost:8069 --disable-notifications --no-first-run --no-default-browser-check
+Terminal=false
+StartupNotify=false
+X-GNOME-Autostart-enabled=true

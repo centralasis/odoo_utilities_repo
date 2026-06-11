@@ -1,0 +1,54 @@
+#system update and ssh access
+sudo apt update -y
+sudo apt upgrade -y
+sudo apt install openssh-server -y
+sudo apt install docker-compose -y
+
+
+#Create Cashier
+sudo useradd -m cashier
+sudo passwd -d cashier
+
+#web browser
+wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+sudo apt install ./google-chrome-stable_current_amd64.deb
+
+#Make the enviroment
+mkdir odoo_pos
+cd odoo_pos
+git clone https://github.com/centralasis/odoo_utilities_repo.git
+cp -r odoo_utilities_repo/odoo19 .
+cp  odoo_utilities_repo/pos_program/escpos_driver.py .
+cp  odoo_utilities_repo/config.ini .
+cp  odoo_utilities_repo/pos_program/custom.conf .
+cp  odoo_utilities_repo/pos_program/chrome-kiosk.desktop .
+
+
+wget https://raw.githubusercontent.com/pywebdriver/pywebdriver/master/debian/install.sh
+sudo chmod +x install.sh
+sudo ./install.sh
+sudo service pywebdriver stop
+sudo apt install -y mkcert
+mkcert -install
+mkcert localhost 127.0.0.1
+sudo cp escpos_driver.py /opt/venvs/pywebdriver/lib/python3.10/site-packages/pywebdriver/plugins/.
+sudo cp localhost+1* /etc/pywebdriver/cert/.
+sudo cp config.ini /etc/pywebdriver/.
+sudo service pywebdriver start
+
+
+#install Odoo
+docker-compose -f odoo19/docker-compose.yml up -d
+sudo reboot
+
+
+# Last Script to run
+sudo certutil -d sql:/home/admin/.pki/nssdb -A -t "C,," -n "mkcert" -i "$(mkcert -CAROOT)/rootCA.pem"
+sudo certutil -d sql:/home/cashier/.pki/nssdb -A -t "C,," -n "mkcert" -i "$(mkcert -CAROOT)/rootCA.pem"
+sudo cp custom.conf /etc/gdm3/.
+sudo mkdir -p /home/cashier/.config/autostart
+sudo cp chrome-kiosk.desktop /home/cashier/.config/autostart/.
+sudo reboot
+
+
+
