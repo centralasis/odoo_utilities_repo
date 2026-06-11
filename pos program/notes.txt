@@ -1,5 +1,0 @@
-#this is the command to disable airplane more. the reason for this is when airplane mode is active it stops the comunication to the printer( need to test)
-sudo systemctl mask systemd-rfkill.service systemd-rfkill.socket
-
-#to disable notifications for the cashier user
-sudo -u cashier DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$(id -u cashier)/bus" gsettings set org.gnome.desktop.notifications show-banners false
