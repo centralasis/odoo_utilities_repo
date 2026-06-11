@@ -1,0 +1,66 @@
+version: '2'
+services:
+
+  tunnel:
+    image: cloudflare/cloudflared:latest
+    container_name: cloudflared-tunnel
+    restart: unless-stopped
+    networks:
+      - tunnel_net
+    command: tunnel --no-autoupdate run --token eyJhIjoiODExZTY5NGM1ODRmNmYzMWYxZjliYzgxMDNmMzg5NzAiLCJ0IjoiN2IwNTA2ZDAtODhhNi00ZTYwLWIxYjQtNTgyODNjMGJiNTFiIiwicyI6Ik1HWXpPRFppWmprdE9UUTVNeTAwTmpWaUxUZzVZek10TURFek1UZzRPREZrWkdJeCJ9
+
+  web_19:
+    image: odoo:19.0
+    build:
+      args:
+        ODOO_RELEASE: "20260324"
+        ODOO_SHA: "2d822b95d55931787cbaf2bd09f4f2d54b276b3d"
+    restart: unless-stopped
+    networks:
+      - tunnel_net
+    depends_on:
+      - db19
+    ports:
+      - "8069:8069"
+    volumes:
+      - odoo19-web-data:/var/lib/odoo/
+      - ./config/:/etc/odoo
+      - ./addons/:/mnt/extra-addons
+      - ./enterprise/:/mnt/enterprise
+
+  db19:
+    image: postgres:13
+    restart: unless-stopped
+    networks:
+      - tunnel_net
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_PASSWORD=odoo
+      - POSTGRES_USER=odoo
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    volumes:
+      - odoo19-db-data:/var/lib/postgresql/data/pgdata
+      - ./docker_postres_init.sql:/docker-entrypoint-initdb.d/docker_postgres_init.sql
+
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: unless-stopped
+    networks:
+      - tunnel_net
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "farai.bernard@centralasis.com"
+      PGADMIN_DEFAULT_PASSWORD: "admin"
+    ports:
+      - "82:80"
+    depends_on:
+      - db19
+
+networks:
+  tunnel_net:
+    driver: bridge
+
+volumes:
+  odoo19-web-data:
+  odoo19-db-data:
+
+
