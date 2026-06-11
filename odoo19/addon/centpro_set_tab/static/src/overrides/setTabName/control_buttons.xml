@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="centpro_set_tab.ControlButtons" t-inherit="point_of_sale.ControlButtons" t-inherit-mode="extension">
+        <xpath
+            expr="//t[@t-if='props.showRemainingButtons']/div/button[hasclass('o_pricelist_button')]"
+            position="before">
+            <!-- All these buttons will only be displayed in a dialog -->
+            <t t-if="!pos.config.module_pos_restaurant">
+                 <button t-if="!pos.getOrder()?.table_id" t-att-class="buttonClass" t-on-click="() => this.pos.editFloatingOrderName(this.pos.getOrder())">
+                    <i class="fa fa-pencil-square-o me-1" />Tab Name
+                </button>
+            </t>
+        </xpath>
+    </t>
+</templates>

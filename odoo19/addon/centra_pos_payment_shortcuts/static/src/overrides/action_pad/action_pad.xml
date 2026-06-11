@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+<t t-name="centra_pos_payment_shortcuts.ActionpadWidget" t-inherit="point_of_sale.ActionpadWidget" t-inherit-mode="extension" >
+    <xpath expr="//button[hasclass('pay-order-button') and hasclass('pay')]" position="before">
+    
+            <button t-if='getScreen()'  t-esc="props.cashValidateAmount?.text" t-on-click="() => pos.pay(props.cashValidateAmount?.cashPaid)" class="pay pay-order-button button btn btn-secondary btn-lg py-3 d-flex align-items-center justify-content-center flex-fill"/>
+            <button t-if='getScreen()' t-on-click="() => props.change.toggleChange()"  t-att-class="props?.change?.isChange ? 'btn-dark' : 'btn-secondary'" class="pay pay-order-button button btn  btn-lg py-3 d-flex align-items-center justify-content-center flex-fill">Change</button>
+   
+ 
+            
+    </xpath>
+    
+</t>
+</templates>

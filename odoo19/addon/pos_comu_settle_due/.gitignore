@@ -1,0 +1,37 @@
+# Odoo specific ignores
+
+# Compiled Python files
+*.pyc
+
+# Editor-specific files
+*~
+.*.swp
+
+# Addons specific ignores
+
+# Byte-compiled / optimized Python files
+__pycache__/
+*.py[co]
+
+# Compiled XML files
+*.xmlc
+
+# Database
+*.sqlite
+
+# Web assets
+web/css/libraries/
+web/js/libraries/
+
+# Various Odoo generated files
+*.bak
+*.log
+*.pot
+*.pyc
+*.rej
+*.swp
+*~
+
+# Editor specific ignore (if you're using PyCharm or VSCode)
+.idea/
+.vscode/

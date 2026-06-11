@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+<t t-name="centpro_set_tab.TicketScreen" t-inherit="point_of_sale.TicketScreen" t-inherit-mode="extension" >
+
+<xpath expr="//table[hasclass('table-striped') and hasclass('table')]" position="replace">
+
+    <table t-if="!ui.isSmall"  class="table table-striped table-hover">
+                                <tbody>
+                                    <t t-foreach="_filteredOrderList" t-as="order" t-key="order.uuid">
+                                        <tr class="order-row" t-attf-class="{{ isHighlighted(order) ? 'highlight active': '' }}" t-att-orderUuid="order.uuid"
+                                            t-on-click="() => this.onClickOrder(order)" t-on-dblclick="() => order.finalized ? ()=>{} : this.setOrder(order)" >
+                                            <td>
+                                                <div class="fs-6 fw-bolder"><t t-esc="this.pos.getDate(order.date_order)"></t></div>
+                                                <div class="small text-muted"><t t-esc="this.pos.getTime(order.date_order)"></t></div>
+                                            </td>
+                                            <td class="align-middle">
+                                                <div class="small text-muted"><t t-esc="order.pos_reference"></t></div>
+                                            </td>
+                                            <td class="align-middle">
+                                                <div class="fw-bolder"><t t-esc="order.getName()"></t></div>
+                                                <div id="order-tags" t-if="usePreset" t-attf-class="badge rounded o_colorlist_item_color_{{order.preset_id?.color}}" style="font-size: 0.75rem !important;">
+                                                    <t t-esc="order.preset_id?.name"></t>
+                                                </div>
+                                            </td>
+                                            <td class="align-middle">
+                                                <t t-if="order.presetTime">
+                                                    <div t-if="order.isFutureDate" class="fw-bolder" t-esc="order.presetDate" />
+                                                    <div t-attf-class="fs-6 badge rounded {{ this.getPresetTimeColor(order) }}" t-esc="order.presetTime"/>
+                                                </t>
+                                            </td>
+                                            <td t-if="showCardholderName()">
+                                                <div><t t-esc="getCardholderName(order)"></t></div>
+                                            </td>
+                                            <td>
+                                                <t t-esc="getCashier(order)"></t>
+                                            </td>
+                                            <td class="align-middle">
+                                                <div class="fw-bolder"><t t-esc="getTotal(order)"></t></div>
+                                            </td>
+                                            <td class="align-middle text-end">
+                                                <t t-set="status" t-value="getStatus(order)" />
+                                                <div t-attf-class="badge rounded fs-6 text-bg-{{
+                                                    status === 'Ongoing' || status === 'Payment'
+                                                    ? 'info'
+                                                    : status === 'Receipt' || status === 'Paid'
+                                                    ? 'success'
+                                                    : 'secondary'
+                                                }}">
+                                                    <t t-esc="status"></t>
+                                                </div>
+                                            </td>
+                                            <td class="text-end delete-column" name="delete-column">
+                                                <button t-if="!shouldHideDeleteButton(order) and this.pos.cashier._role !== 'minimal'" t-on-click.stop="() => this.onDeleteOrder(order)" class="btn btn-link btn-lg text-danger">
+                                                    <i class="fa fa-trash" aria-hidden="true"/>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+
+                            </table>
+                                                    
+</xpath>
+</t>
+</templates>
