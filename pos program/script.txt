@@ -8,7 +8,6 @@ sudo apt install docker-compose -y
 mkdir odoo_pos
 cd odoo_pos
 git clone git@github.com:centralasis/odoo_utilities_repo.git odoo_utilities_repo
-mkdir odoo19
 cp -r odoo_utilities_repo/odoo19 .
 
 #install Odoo
