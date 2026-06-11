@@ -5,3 +5,4 @@ Exec=/usr/bin/google-chrome --kiosk http://localhost:8069 --disable-notification
 Terminal=false
 StartupNotify=false
 X-GNOME-Autostart-enabled=true
+X-GNOME-Autostart-Delay=5
