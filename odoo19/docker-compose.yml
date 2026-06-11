@@ -10,8 +10,7 @@ services:
     command: tunnel --no-autoupdate run --token eyJhIjoiODExZTY5NGM1ODRmNmYzMWYxZjliYzgxMDNmMzg5NzAiLCJ0IjoiN2IwNTA2ZDAtODhhNi00ZTYwLWIxYjQtNTgyODNjMGJiNTFiIiwicyI6Ik1HWXpPRFppWmprdE9UUTVNeTAwTmpWaUxUZzVZek10TURFek1UZzRPREZrWkdJeCJ9
 
   web_19:
-    image: odoo:19.0
-    build: .
+    image: odoo:19.0-20260324
     restart: unless-stopped
     networks:
       - tunnel_net
