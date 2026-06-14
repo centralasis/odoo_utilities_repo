@@ -7,6 +7,8 @@ services:
     restart: unless-stopped
     networks:
       - tunnel_net
+    extra_hosts:
+      - "pos.host.network:host-gateway"
     command: tunnel --no-autoupdate run --token eyJhIjoiODExZTY5NGM1ODRmNmYzMWYxZjliYzgxMDNmMzg5NzAiLCJ0IjoiN2IwNTA2ZDAtODhhNi00ZTYwLWIxYjQtNTgyODNjMGJiNTFiIiwicyI6Ik1HWXpPRFppWmprdE9UUTVNeTAwTmpWaUxUZzVZek10TURFek1UZzRPREZrWkdJeCJ9
 
   web_19:

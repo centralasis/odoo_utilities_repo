@@ -2,4 +2,5 @@
 sudo systemctl mask systemd-rfkill.service systemd-rfkill.socket
 
 #to disable notifications for the cashier user
+my have to use adduser to allow this
 sudo -u cashier DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$(id -u cashier)/bus" gsettings set org.gnome.desktop.notifications show-banners false

@@ -22,10 +22,12 @@ cp  odoo_utilities_repo/pos_program/escpos_driver.py .
 cp  odoo_utilities_repo/pos_program/config.ini .
 cp  odoo_utilities_repo/pos_program/custom.conf .
 cp  odoo_utilities_repo/pos_program/chrome-kiosk.desktop .
+cp  odoo_utilities_repo/pos_program/rfkill-unblock.service .
 
 #disable system print escpos_driver
 sudo systemctl stop cups cups-browsed cups.socket cups.path
 sudo systemctl disable cups cups-browsed cups.socket cups.path
+sudo systemctl mask cups cups-browsed cups.socket cups.path
 echo -e "blacklist lp\nblacklist usblp" | sudo tee /etc/modprobe.d/blacklist-printing.conf
 sudo modprobe -r lp usblp
 sudo update-initramfs -u
@@ -50,7 +52,7 @@ sudo service pywebdriver start
 
 
 #install Odoo
-docker-compose -f odoo19/docker-compose.yml up -d
+sudo docker-compose -f odoo19/docker-compose.yml up -d
 sudo reboot
 
 
@@ -63,6 +65,7 @@ sudo certutil -d sql:/home/cashier/.local/share/pki/nssdb -A -t "C,," -n "mkcert
 sudo cp custom.conf /etc/gdm3/.
 sudo mkdir -p /home/cashier/.config/autostart
 sudo cp chrome-kiosk.desktop /home/cashier/.config/autostart/.
+sudo cp rfkill-unblock.service /etc/systemd/system/.
 sudo reboot
 
 
